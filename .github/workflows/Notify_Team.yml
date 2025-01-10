@@ -1,0 +1,15 @@
+name: Notify Team
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send notification
+      if: github.event.label.name == 'high priority'
+      run: |
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"A high-priority issue has been created: ${{ github.event.issue.html_url }}"}' YOUR_SLACK_WEBHOOK_URL
